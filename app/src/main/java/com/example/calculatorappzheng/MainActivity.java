@@ -10,23 +10,22 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public double Calculate(String sign){
-        String input = textView.getText().toString();
-        Integer.parseInt(secondInt(input));
+    public double Calculate(String sign, String input){
+        double num = Double.parseDouble(secondVar(input));
         if(sign.equals("+")){
-            return firstVar+Integer.parseInt(secondInt(input));
+            return firstVar+num;
         }
         if(sign.equals("-")){
-            return firstVar-Integer.parseInt(secondInt(input));
+            return firstVar-num;
         }
         if(sign.equals("/")){
-            return (double) firstVar/Integer.parseInt(secondInt(input));
+            return (double)Math.round((double)firstVar/num * 100000d) / 100000d;
         }
         if(sign.equals("^")){
-            return firstVar^Integer.parseInt(secondInt(input));
+            return Math.pow(firstVar, num);
         }
         if(sign.equals("×")){
-            return firstVar*Integer.parseInt(secondInt(input));
+            return firstVar*num;
         }
 
         return 0;
@@ -34,7 +33,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean CheckNum(String str){
-        int num = str.length() - 1;
+        if(str.equals("")){
+            return true;
+        }
+        if(!secondVar(str).equals("0")){
+            return true;
+        }
         if(str.substring(str.length()-1).equals("+")){
             return true;
         }
@@ -62,26 +66,27 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public String secondInt(String str){
+    public String secondVar(String str){
         if(str.indexOf('+') != -1){
-            return str.substring(str.indexOf("+"));
+            return str.substring(str.indexOf("+")+1);
         }
         if(str.indexOf('-') != -1){
-            return str.substring(str.indexOf("-"));
+            return str.substring(str.indexOf("-")+1);
         }
         if(str.indexOf('/') != -1){
-            return str.substring(str.indexOf("/"));
+            return str.substring(str.indexOf("/")+1);
         }
         if(str.indexOf('^') != -1){
-            return str.substring(str.indexOf("^"));
+            return str.substring(str.indexOf("^")+1);
         }
         if(str.indexOf('×') != -1){
-            return str.substring(str.indexOf("×"));
+            return str.substring(str.indexOf("×")+1);
         }
-
+        return "0";
     }
 
     TextView textView;
+    TextView subText;
     Button b1;
     Button b2;
     Button b3;
@@ -103,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     Button b18;
     Button b19;
     Button b20;
-    public int firstVar = 0;
+    public double firstVar = 0;
     public String sign = "";
 
     @Override
@@ -112,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView =findViewById(R.id.font);
+        subText = findViewById(R.id.subText);
         b1 = findViewById(R.id.button1);
         b2 = findViewById(R.id.button2);
         b3 = findViewById(R.id.button3);
@@ -167,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
                 String input = textView.getText().toString();
                 if(!CheckNum(input)){
-                    firstVar = Integer.parseInt(input);
+                    firstVar = Double.parseDouble(input);
                     sign = "/";
                     textView.append("/");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use ÷");
                 }
 
             }
@@ -207,12 +213,12 @@ public class MainActivity extends AppCompatActivity {
 
                 String input = textView.getText().toString();
                 if(!CheckNum(input)){
-                    firstVar = Integer.parseInt(input);
+                    firstVar = Double.parseDouble(input);
                     sign = "×";
                     textView.append("×");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use ×");
                 }
 
 
@@ -248,12 +254,12 @@ public class MainActivity extends AppCompatActivity {
 
                 String input = textView.getText().toString();
                 if(!CheckNum(input)){
-                    firstVar = Integer.parseInt(input);
+                    firstVar = Double.parseDouble(input);
                     sign = "-";
                     textView.append("-");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use -");
                 }
 
             }
@@ -261,8 +267,14 @@ public class MainActivity extends AppCompatActivity {
         b13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String input = textView.getText().toString();
+                if(!input.substring(input.length()-1).equals("0")){
+                    textView.append("0");
+                }
+                else{
+                    textView.setText("can't type 0");
+                }
 
-                textView.append("0");
 
             }
         });
@@ -279,11 +291,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String input = textView.getText().toString();
-                if(!CheckNum(input)){
+                if(!CheckNum(input)&&(input.indexOf('.') == -1)){
                     textView.append(".");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use .");
                 }
 
             }
@@ -293,12 +305,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String input = textView.getText().toString();
                 if(!CheckNum(input)){
-                    firstVar = Integer.parseInt(input);
+                    firstVar = Double.parseDouble(input);
                     sign = "+";
                     textView.append("+");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use +");
                 }
 
 
@@ -309,27 +321,32 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String input = textView.getText().toString();
-                if(!CheckNum(input)){
-                    textView.append("e");
+                if(secondVar(input).equals("")) {
+                    textView.append("2.71828");
+                }
+                if(input.equals("")){
+                    textView.append("2.71828");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't click");
                 }
+
 
             }
         });
         b18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String input = textView.getText().toString();
-                if(!CheckNum(input)){
-                    textView.append("π");
+                if(secondVar(input).equals("")) {
+                    textView.append("3.14159");
+                }
+                if(input.equals("")){
+                    textView.append("3.14159");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't click");
                 }
-
 
             }
         });
@@ -339,12 +356,12 @@ public class MainActivity extends AppCompatActivity {
 
                 String input = textView.getText().toString();
                 if(!CheckNum(input)){
-                    firstVar = Integer.parseInt(input);
+                    firstVar = Double.parseDouble(input);
                     sign = "^";
                     textView.append("^");
                 }
                 else{
-                    textView.setText("cannot calculate");
+                    subText.setText("can't use ^");
                 }
 
             }
@@ -352,12 +369,18 @@ public class MainActivity extends AppCompatActivity {
         b20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String input = textView.getText().toString();
+                if(!input.equals("")){
+                    subText.setText("");
+                    subText.append(firstVar + " " + sign + " " + Double.parseDouble(secondVar(input)));
 
+                    textView.setText("");
+                    textView.append( String.valueOf(Calculate(sign, input)));
+                }
+                else{
+                    subText.setText("can't use =");
+                }
 
-                textView.setText("");
-                textView.append( String.valueOf(Calculate(sign)));
 
             }
         });
