@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--TEXT SIZES-->
     <dimen name="huge_text">50sp</dimen>
     <dimen name="big_text">30sp</dimen>
     <dimen name="medium_text">25sp</dimen>
     <dimen name="small_text">20sp</dimen>
+    <!--PADDING-->
+    <dimen name="padding_big">10_dip</dimen>
+    <dimen name="padding_small">5_dip</dimen>
+    <!--MARGINS-->
+    <dimen name="margin_big">40dp</dimen>
+    <dimen name="margin_small">27dp</dimen>
+
 </resources>

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean CheckNum(String str){
+    public boolean CheckNum(String str){ //false
         if(str.equals("")){
             return true;
         }
@@ -55,12 +55,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if(str.substring(str.length()-1).equals("^")){
-            return true;
-        }
-        if(str.substring(str.length()-1).equals("e")){
-            return true;
-        }
-        if(str.substring(str.length()-1).equals("π")){
             return true;
         }
         return false;
@@ -294,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
                 if(!CheckNum(input)&&(input.indexOf('.') == -1)){
                     textView.append(".");
                 }
+                else if(!CheckNum(input)&&(!secondVar(input).equals("0"))){
+                    textView.append(".");
+                }
                 else{
                     subText.setText("can't use .");
                 }
@@ -324,11 +321,11 @@ public class MainActivity extends AppCompatActivity {
                 if(secondVar(input).equals("")) {
                     textView.append("2.71828");
                 }
-                if(input.equals("")){
+                else if(input.equals("")){
                     textView.append("2.71828");
                 }
                 else{
-                    subText.setText("can't click");
+                    subText.setText("can't use e");
                 }
 
 
@@ -341,11 +338,11 @@ public class MainActivity extends AppCompatActivity {
                 if(secondVar(input).equals("")) {
                     textView.append("3.14159");
                 }
-                if(input.equals("")){
+                else if(input.equals("")){
                     textView.append("3.14159");
                 }
                 else{
-                    subText.setText("can't click");
+                    subText.setText("can't use π");
                 }
 
             }
@@ -370,12 +367,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String input = textView.getText().toString();
-                if(!input.equals("")){
+                if(!input.equals("")
+                        &&!input.substring(input.length()-1).equals("+")
+                        &&!input.substring(input.length()-1).equals("-")
+                        &&!input.substring(input.length()-1).equals("*")
+                        &&!input.substring(input.length()-1).equals("/")
+                        &&!input.substring(input.length()-1).equals(".")
+                        &&!input.substring(input.length()-1).equals("^")){
                     subText.setText("");
                     subText.append(firstVar + " " + sign + " " + Double.parseDouble(secondVar(input)));
-
                     textView.setText("");
-                    textView.append( String.valueOf(Calculate(sign, input)));
+                    if(Double.parseDouble(secondVar(input)) == 0 && sign == "/" ){
+                        textView.setText("");
+                        subText.setText("Undefined");
+                    }
+                    else {
+                        textView.append(String.valueOf(Calculate(sign, input)));
+                    }
                 }
                 else{
                     subText.setText("can't use =");
