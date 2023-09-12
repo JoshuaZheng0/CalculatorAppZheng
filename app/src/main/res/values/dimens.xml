@@ -6,8 +6,8 @@
     <dimen name="medium_text">25sp</dimen>
     <dimen name="small_text">20sp</dimen>
     <!--PADDING-->
-    <dimen name="padding_big">10_dip</dimen>
-    <dimen name="padding_small">5_dip</dimen>
+    <dimen name="padding_big">10dip</dimen>
+    <dimen name="padding_small">5dip</dimen>
     <!--MARGINS-->
     <dimen name="margin_big">40dp</dimen>
     <dimen name="margin_small">27dp</dimen>
