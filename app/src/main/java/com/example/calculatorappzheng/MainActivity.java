@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                     textView.append("0");
                 }
                 else{
-                    textView.setText("can't type 0");
+                    subText.setText("can't type 0");
                 }
 
 
@@ -288,7 +288,13 @@ public class MainActivity extends AppCompatActivity {
                 if(!CheckNum(input)&&(input.indexOf('.') == -1)){
                     textView.append(".");
                 }
-                else if(!CheckNum(input)&&(!secondVar(input).equals("0"))){
+                else if((!secondVar(input).equals("0")&&secondVar(input).indexOf(".")==-1)&&!input.equals("")
+                        &&!input.substring(input.length()-1).equals("+")
+                        &&!input.substring(input.length()-1).equals("-")
+                        &&!input.substring(input.length()-1).equals("*")
+                        &&!input.substring(input.length()-1).equals("/")
+                        &&!input.substring(input.length()-1).equals(".")
+                        &&!input.substring(input.length()-1).equals("^")){
                     textView.append(".");
                 }
                 else{
