@@ -227,8 +227,8 @@
         android:layout_marginStart="111dp"
         android:layout_marginTop="547dp"
         android:backgroundTint="@color/purple4"
-        android:text="AC"
-        android:textSize="@dimen/small_text"
+        android:text="C"
+        android:textSize="@dimen/big_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -284,6 +284,20 @@
         android:layout_marginTop="630dp"
         android:backgroundTint="@color/purple5"
         android:text="@string/Pi"
+        android:textSize="@dimen/big_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/del"
+        android:layout_width="364dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="705dp"
+        android:backgroundTint="@color/purple5"
+        android:text="DELETE"
         android:textSize="@dimen/big_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

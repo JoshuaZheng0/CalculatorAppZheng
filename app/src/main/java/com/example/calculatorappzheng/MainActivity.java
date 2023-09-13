@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     Button b18;
     Button b19;
     Button b20;
+    Button del;
     public double firstVar = 0;
     public String sign = "";
 
@@ -132,14 +133,27 @@ public class MainActivity extends AppCompatActivity {
         b18 = findViewById(R.id.button18);
         b19 = findViewById(R.id.button19);
         b20 = findViewById(R.id.button20);
+        del = findViewById(R.id.del);
 
 
 
 
 
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String input = textView.getText().toString();
+                if(!input.equals("")) {
+                    textView.setText(input.substring(0, input.length() - 1));
+                }
+
+            }
+        });
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 textView.append("1");
 
@@ -388,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
                         subText.setText("Undefined");
                     }
                     else {
-                        textView.append(String.valueOf(Calculate(sign, input)));
+                        textView.append(String.valueOf(Math.round((double)Calculate(sign, input) * 100000d) / 100000d));
                     }
                 }
                 else{
